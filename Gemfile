@@ -22,7 +22,7 @@ gem "jbuilder"
 gem "mini_racer", "~> 0.8.0"
 
 # The library which provides react helpers and more in rails
-gem "react_on_rails"
+gem "react_on_rails", "16.7.0.rc.0"
 
 # Modern javscript compressor
 gem "terser"
@@ -73,7 +73,7 @@ group :development do
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
+  # Speed up commands on slow machines / big apps [https://github.com/Rails/spring]
   # gem "spring"
 end
 
