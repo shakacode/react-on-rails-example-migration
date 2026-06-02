@@ -18,9 +18,6 @@ gem "puma", "~> 5.0"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-# Embedded V8 javascript engine in ruby, it's pretty fast
-gem "mini_racer", "~> 0.8.0"
-
 # The library which provides react helpers and more in rails
 gem "react_on_rails"
 

@@ -42,9 +42,9 @@ function Navbar({ menus, homeUrl }) {
   );
 }
 
-Card.propTypes = {
+Navbar.propTypes = {
   menus: PropTypes.string,
   homeUrl: PropTypes.string,
-}
+};
 
 export default Navbar;

@@ -1,4 +1,4 @@
-import React, from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 /**
@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 function PostsShow({ post }) {
   const parsedPost = JSON.parse(post);
 
-  return(
+  return (
     <div className="prose">
       <h1>{parsedPost.title}</h1>
       <p>{parsedPost.content}</p>
@@ -18,6 +18,6 @@ function PostsShow({ post }) {
 
 PostsShow.propTypes = {
   post: PropTypes.string
-}
+};
 
 export default PostsShow;
