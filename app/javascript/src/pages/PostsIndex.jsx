@@ -1,6 +1,5 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import { post_path } from "../../routes";
 
 import Card from "../components/Card";
 
@@ -14,7 +13,7 @@ function PostsIndex({ posts }) {
       {JSON.parse(posts).map((post, index) => {
         return(
           <div key={index}>
-            <Card title={post.title} body={post.content} url={post_path(post.id)} />
+            <Card title={post.title} body={post.content} url={`/posts/${post.id}`} />
           </div>
         );
       })}
