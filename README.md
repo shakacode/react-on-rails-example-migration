@@ -3,7 +3,7 @@
 This repository is a migrated version of [ganchdev/react-rails-example](https://github.com/ganchdev/react-rails-example), converted from `react-rails` to [`react_on_rails`](https://github.com/shakacode/react_on_rails).
 
 ## Requirements
-- Ruby 3.1+
+- Ruby 3.3+
 - Node.js 18+
 - Yarn 1.x
 
