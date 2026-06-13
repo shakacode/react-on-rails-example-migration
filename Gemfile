@@ -22,7 +22,7 @@ gem "jbuilder"
 gem "mini_racer", "~> 0.8.0"
 
 # The library which provides react helpers and more in rails
-gem "react_on_rails", "17.0.0.rc.1"
+gem "react_on_rails", "17.0.0.rc.3"
 
 # Modern javscript compressor
 gem "terser"
