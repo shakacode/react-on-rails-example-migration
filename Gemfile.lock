@@ -68,6 +68,8 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
+    base64 (0.3.0)
+    bigdecimal (4.1.2)
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
@@ -86,6 +88,7 @@ GEM
     connection_pool (3.0.2)
     crass (1.0.6)
     date (3.3.3)
+    drb (2.2.3)
     erubi (1.12.0)
     execjs (2.8.1)
     foreman (0.87.2)
@@ -118,6 +121,7 @@ GEM
       libv8-node (~> 18.16.0.0)
     minitest (5.19.0)
     msgpack (1.7.2)
+    mutex_m (0.3.0)
     net-imap (0.3.7)
       date
       net-protocol
@@ -128,8 +132,7 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.15.4)
-      mini_portile2 (~> 2.8.2)
+    nokogiri (1.19.4-arm64-darwin)
       racc (~> 1.4)
     package_json (0.2.0)
     pry (0.14.2)
@@ -141,7 +144,7 @@ GEM
     public_suffix (5.0.3)
     puma (5.6.7)
       nio4r (~> 2.0)
-    racc (1.7.1)
+    racc (1.8.1)
     rack (2.2.8)
     rack-proxy (0.7.7)
       rack
@@ -239,13 +242,17 @@ PLATFORMS
   arm64-darwin-25
 
 DEPENDENCIES
+  base64
+  bigdecimal
   bootsnap
   capybara
+  drb
   foreman (~> 0.87.2)
   jbuilder
   js-routes
   jsbundling-rails (~> 1.1)
   mini_racer (~> 0.8.0)
+  mutex_m
   pry-remote
   puma (~> 5.0)
   rails (~> 7.0.7, >= 7.0.7.2)

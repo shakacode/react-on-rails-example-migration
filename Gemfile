@@ -6,6 +6,11 @@ ruby ">= 3.3.0"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.7", ">= 7.0.7.2"
 
+gem "base64"
+gem "bigdecimal"
+gem "drb"
+gem "mutex_m"
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
