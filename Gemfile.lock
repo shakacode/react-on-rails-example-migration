@@ -177,7 +177,7 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
-    react_on_rails (17.0.0.rc.3)
+    react_on_rails (17.0.0.rc.6)
       addressable
       connection_pool
       execjs (~> 2.5)
@@ -248,7 +248,7 @@ DEPENDENCIES
   pry-remote
   puma (~> 5.0)
   rails (~> 7.0.7, >= 7.0.7.2)
-  react_on_rails (= 17.0.0.rc.3)
+  react_on_rails (= 17.0.0.rc.6)
   selenium-webdriver
   shakapacker (= 9.7)
   sprockets-rails
