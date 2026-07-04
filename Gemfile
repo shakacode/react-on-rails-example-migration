@@ -89,4 +89,4 @@ group :test do
   gem "webdrivers"
 end
 
-gem "shakapacker", "= 9.7"
+gem "shakapacker", "= 10.2.0"
