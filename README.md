@@ -4,7 +4,7 @@ This repository is a migrated version of [ganchdev/react-rails-example](https://
 
 ## Requirements
 - Ruby 3.3+
-- Node.js 18+
+- Node.js 20.19+ or 22.12+
 - Yarn 1.x
 
 ## What This Demonstrates
