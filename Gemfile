@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby ">= 3.3.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.7", ">= 7.0.7.2"
+gem "rails", "~> 8.1.3"
 
 gem "base64"
 gem "bigdecimal"
@@ -15,16 +15,16 @@ gem "mutex_m"
 gem "sprockets-rails"
 
 # Use sqlite3 as the database for Active Record
-gem "sqlite3", "~> 1.4"
+gem "sqlite3", "~> 2.9"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
+gem "puma", "~> 8.0"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
 # Embedded V8 javascript engine in ruby, it's pretty fast
-gem "mini_racer", "~> 0.8.0"
+gem "mini_racer", "~> 0.21.4"
 
 # The library which provides react helpers and more in rails
 gem "react_on_rails", "17.0.0.rc.6"
@@ -37,13 +37,13 @@ gem "terser"
 gem "js-routes"
 
 # Adds esbuild support to the project
-gem "jsbundling-rails", "~> 1.1"
+gem "jsbundling-rails", "~> 1.3"
 
 # Adds tailwind css
-gem "tailwindcss-rails", "~> 2.0"
+gem "tailwindcss-rails", "~> 4.6"
 
 # Run all the things easier in development
-gem "foreman", "~> 0.87.2"
+gem "foreman", "~> 0.90.0"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -86,7 +86,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   # Rails 7.0's test runner expects minitest 5.x suite APIs.
-  gem "minitest", "< 6"
+  gem "minitest", "< 7"
   gem "selenium-webdriver"
   gem "webdrivers"
 end
