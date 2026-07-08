@@ -85,7 +85,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
-  # Rails 7.0's test runner expects minitest 5.x suite APIs.
+  # Rails 8.1's test runner expects minitest 6.x suite APIs.
   gem "minitest", "< 7"
   gem "selenium-webdriver"
   gem "webdrivers"

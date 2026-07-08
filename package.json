@@ -31,8 +31,8 @@
     "webpack-subresource-integrity": "^5.1.0"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",
-    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -m -o ./app/assets/builds/tailwind.css"
+    "build": "esbuild app/javascript/*.js --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",
+    "build:css": "tailwindcss -i ./app/assets/tailwind/application.css -m -o ./app/assets/builds/tailwind.css"
   },
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "0.6.2",
