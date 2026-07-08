@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@source "../../../public/*.html";
+@source "../../helpers/**/*.rb";
+@source "../../javascript/src/**/*.js";
+@source "../../javascript/src/**/*.jsx";
+@source "../../views/**/*.erb";
+@source "../../views/**/*.haml";
+@source "../../views/**/*.html";
+@source "../../views/**/*.slim";
+
+@theme {
+  --font-sans: "Inter var", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/aspect-ratio";
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/container-queries";
+@plugin "daisyui" {
+  themes: bumblebee --default, halloween;
+  logs: true;
+}
+
+html, body {
+  height: 100%;
+}
+
+/*
+
+@layer components {
+  .btn-primary {
+    @apply py-2 px-4 bg-blue-200;
+  }
+}
+
+*/
