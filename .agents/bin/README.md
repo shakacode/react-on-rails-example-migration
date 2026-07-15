@@ -8,10 +8,10 @@ means that capability is n/a here.
 | Script | Purpose | This repo runs |
 | --- | --- | --- |
 | `setup` | Install dependencies | `bin/setup` |
-| `validate` | Pre-push gate | `bin/yarn build`, production Shakapacker compilation, then `bin/rails test` |
+| `validate` | Pre-push gate | JavaScript and Tailwind CSS builds, production Shakapacker compilation, then `bin/rails test` |
 | `test` | Run tests | `bin/rails test` |
 | `lint` | Lint / format | n/a |
-| `build` | Build / type-check | `bin/yarn build` followed by `RAILS_ENV=production bin/shakapacker` |
+| `build` | Build / type-check | `bin/yarn build`, `bin/yarn build:css`, then `RAILS_ENV=production bin/shakapacker` |
 | `docs` | Validate documentation | n/a |
 | `ci-detect` | Detect CI impact | n/a |
 
