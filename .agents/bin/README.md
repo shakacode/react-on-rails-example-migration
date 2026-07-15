@@ -1,0 +1,18 @@
+# Agent Workflow Scripts
+
+Standard entry points that portable agent-workflow skills call, so a skill can
+run `.agents/bin/<name>` in any repo without knowing this repo's specific
+commands. Each script is a thin, repo-owned wrapper. A script that is **absent**
+means that capability is n/a here.
+
+| Script | Purpose | This repo runs |
+| --- | --- | --- |
+| `setup` | Install dependencies | `bin/setup` |
+| `validate` | Pre-push gate | JavaScript and Tailwind CSS builds, production Shakapacker compilation, then `bin/rails test` |
+| `test` | Run tests | `bin/rails test` |
+| `lint` | Lint / format | n/a |
+| `build` | Build / type-check | `bin/yarn build`, `bin/yarn build:css`, then `RAILS_ENV=production bin/shakapacker` |
+| `docs` | Validate documentation | n/a |
+| `ci-detect` | Detect CI impact | n/a |
+
+Non-command policy lives in [`../agent-workflow.yml`](../agent-workflow.yml).
