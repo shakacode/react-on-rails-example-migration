@@ -8,10 +8,10 @@ means that capability is n/a here.
 | Script | Purpose | This repo runs |
 | --- | --- | --- |
 | `setup` | Install dependencies | `bin/setup` |
-| `validate` | Pre-push gate | `bin/rails test` |
+| `validate` | Pre-push gate | `bin/yarn build` followed by `bin/rails test` |
 | `test` | Run tests | `bin/rails test` |
 | `lint` | Lint / format | n/a |
-| `build` | Build / type-check | n/a |
+| `build` | Build / type-check | `bin/yarn build` |
 | `docs` | Validate documentation | n/a |
 | `ci-detect` | Detect CI impact | n/a |
 
