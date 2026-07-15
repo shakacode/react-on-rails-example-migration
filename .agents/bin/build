@@ -2,4 +2,5 @@
 # Managed by shakacode/agent-workflows; this repo owns the command below.
 set -euo pipefail
 cd "$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)"
-exec bin/yarn build "$@"
+bin/yarn build
+exec env RAILS_ENV=production bin/shakapacker "$@"
