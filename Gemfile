@@ -27,7 +27,7 @@ gem "jbuilder"
 gem "mini_racer", "~> 0.21.4"
 
 # The library which provides react helpers and more in rails
-gem "react_on_rails", "17.0.0.rc.6"
+gem "react_on_rails", "17.0.1"
 
 # Modern javscript compressor
 gem "terser"
@@ -91,4 +91,4 @@ group :test do
   gem "webdrivers"
 end
 
-gem "shakapacker", "= 10.2.0"
+gem "shakapacker", "10.3.0"
