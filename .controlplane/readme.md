@@ -39,10 +39,12 @@ app identity can `reveal` the app secret policy.
 
 ## GitHub Configuration
 
-The normal review-app path needs only the repository secret
-`CPLN_TOKEN_STAGING`; the review prefix and staging organization are inferred
-from `.controlplane/controlplane.yml`. Set `STAGING_APP_NAME` to
-`react-on-rails-migration-example-staging` for automatic staging deploys.
+Store `CPLN_TOKEN_STAGING` as a repository secret. Set the repository variables
+`CPLN_ORG_STAGING` to the staging Control Plane organization and
+`STAGING_APP_NAME` to `react-on-rails-migration-example-staging`; both review
+apps and automatic staging deploys use that staging organization. The review
+app prefix is inferred from `.controlplane/controlplane.yml` unless
+`REVIEW_APP_PREFIX` overrides it.
 
 Create a protected `production` GitHub Environment with required reviewers and
 self-review disabled. Store `CPLN_TOKEN_PRODUCTION` only as an Environment
