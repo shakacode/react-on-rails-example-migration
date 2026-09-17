@@ -53,6 +53,37 @@ const configureServer = () => {
     minimize: false,
   };
   serverWebpackConfig.plugins.unshift(new bundler.optimize.LimitChunkCountPlugin({ maxChunks: 1 }));
+  serverWebpackConfig.plugins.unshift(
+    new bundler.BannerPlugin({
+      banner: `
+if (typeof globalThis.TextEncoder === 'undefined') {
+  globalThis.TextEncoder = class TextEncoder {
+    encode(input = '') {
+      const encoded = unescape(encodeURIComponent(String(input)));
+      return Uint8Array.from(encoded, (character) => character.charCodeAt(0));
+    }
+  };
+}
+
+if (typeof globalThis.MessageChannel === 'undefined') {
+  globalThis.MessageChannel = class MessageChannel {
+    constructor() {
+      const port1 = { onmessage: null };
+      const port2 = {
+        postMessage: (data) => {
+          Promise.resolve().then(() => port1.onmessage?.({ data }));
+        },
+      };
+      this.port1 = port1;
+      this.port2 = port2;
+    }
+  };
+}
+`,
+      entryOnly: true,
+      raw: true,
+    }),
+  );
 
   // Custom output for the server-bundle
   // Using Shakapacker 9.0+ privateOutputPath for automatic sync with shakapacker.yml
