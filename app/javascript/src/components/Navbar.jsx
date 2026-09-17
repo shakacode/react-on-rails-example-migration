@@ -6,9 +6,10 @@ import Card from "./Card";
 /**
  * @param {String} menus
  * @param {String} homeUrl
+ * @param {Number} avatarSeed
  * @return {JSX.Element}
  */
-function Navbar({ menus, homeUrl }) {
+function Navbar({ menus, homeUrl, avatarSeed = 0 }) {
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
@@ -23,7 +24,7 @@ function Navbar({ menus, homeUrl }) {
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <Jazzicon diameter={40} seed={Math.round(Math.random() * 10000000)} />
+              <Jazzicon diameter={40} seed={avatarSeed} />
             </div>
           </label>
           <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
@@ -45,6 +46,7 @@ function Navbar({ menus, homeUrl }) {
 Navbar.propTypes = {
   menus: PropTypes.string,
   homeUrl: PropTypes.string,
+  avatarSeed: PropTypes.number,
 };
 
 export default Navbar;
