@@ -11,10 +11,12 @@ release, repin them with `bin/pin-cpflow-github-ref <release-commit-sha>`.
 ## Runtime Shape
 
 The app uses SQLite and local Active Storage in production. The Control Plane
-templates therefore mount persistent volumes at `/app/db` and `/app/storage`,
-and the release script runs `bin/rails db:prepare` before a new image is made
-live. The Rails workload remains `standard` with one warm replica while
-Capacity AI right-sizes its allocation.
+templates therefore mount persistent volumes at `/app/data` and `/app/storage`,
+set `DATABASE_PATH=/app/data/production.sqlite3`, and leave the image's
+`/app/db` migrations visible to the release script. The release script runs
+`bin/rails db:prepare` before a new image is made live. The Rails workload
+remains `standard` with one warm replica while Capacity AI right-sizes its
+allocation.
 
 ## One-Time Bootstrap
 

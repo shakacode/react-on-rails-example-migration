@@ -16,7 +16,9 @@ spec:
           # See https://www.shakacode.com/control-plane-flow/docs/thruster/ for details.
           protocol: http
       volumes:
-        - path: /app/db
+        # Keep migrations and schema from the image visible under /app/db;
+        # only the SQLite data file belongs on persistent storage.
+        - path: /app/data
           recoveryPolicy: retain
           uri: cpln://volumeset/app-db
         - path: /app/storage
