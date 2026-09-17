@@ -1,76 +1,51 @@
 # Control Plane Deployment Notes
 
-This repo now includes `cpflow` scaffolding for:
+This repository uses `cpflow` for opt-in pull-request review apps, automatic
+staging deploys from `main`, and manual promotion from staging to production.
+The generated GitHub Actions use `cpflow` v5.3.0 and pin the immutable release
+commit `b1e5ff4a04adfccfd8b59996e8abdbb5defb3fd6`; see
+[`.github/cpflow-help.md`](../.github/cpflow-help.md) for the complete commands,
+settings, and upgrade procedure. After regenerating wrappers for a future
+release, repin them with `bin/pin-cpflow-github-ref <release-commit-sha>`.
 
-- opt-in PR review apps
-- automatic staging deploys from `main`
-- manual promotion from staging to production
+## Runtime Shape
 
-## Why This Shape
+The app uses SQLite and local Active Storage in production. The Control Plane
+templates therefore mount persistent volumes at `/app/db` and `/app/storage`,
+and the release script runs `bin/rails db:prepare` before a new image is made
+live. The Rails workload remains `standard` with one warm replica while
+Capacity AI right-sizes its allocation.
 
-This app runs on SQLite in production and stores uploaded files on the local
-disk.
+## One-Time Bootstrap
 
-The Control Plane setup mirrors that:
-
-- `.controlplane/templates/db.yml` creates a persistent volume for `/app/db`
-- `.controlplane/templates/storage.yml` creates a persistent volume for `/app/storage`
-- `.controlplane/templates/rails.yml` mounts both volumes into the `rails` workload
-- `.controlplane/release_script.sh` runs `bin/rails db:prepare` before deploys switch images
-
-The generated `.controlplane/Dockerfile` now installs Node.js alongside Ruby,
-auto-installs JavaScript dependencies for npm/Yarn/pnpm projects, and leaves a
-callable package-manager shim in place so `assets:precompile` can invoke
-`yarn` or `pnpm` again in later build steps.
-
-## Required Runtime Secrets
-
-Before the app will boot on Control Plane, populate `SECRET_KEY_BASE` in the
-generated secret dictionaries:
-
-- `react-on-rails-migration-example-staging-secrets`
-- `react-on-rails-migration-example-review-secrets`
-- `react-on-rails-migration-example-production-secrets`
-
-`cpflow setup-app` creates those dictionaries automatically. You only need to
-add a `SECRET_KEY_BASE` entry to each one before the first deploy.
-
-Review apps run pull request code. Values mounted through `cpln://secret/...`
-can be read by that code after the workload starts, so keep the review secret
-dictionary limited to generated, review-only values. Do not reuse production or
-long-lived staging secret dictionaries for review apps.
-
-## Local cpflow Flow
-
-Typical setup:
+Bootstrap the persistent staging and production apps before their first deploy:
 
 ```sh
-export APP_NAME=react-on-rails-migration-example-staging
+cpflow setup-app \
+  -a react-on-rails-migration-example-staging \
+  --org "$CPLN_ORG_STAGING" \
+  --skip-post-creation-hook
 
-cpflow setup-app -a "$APP_NAME"
-cpflow build-image -a "$APP_NAME"
-cpflow deploy-image -a "$APP_NAME" --run-release-phase
-cpflow open -a "$APP_NAME"
+cpflow setup-app \
+  -a react-on-rails-migration-example-production \
+  --org "$CPLN_ORG_PRODUCTION" \
+  --skip-post-creation-hook
 ```
 
-## GitHub Actions Variables And Secrets
+Add `SECRET_KEY_BASE` to each generated app secret dictionary. Use disposable,
+review-safe values for review apps because pull-request code can read mounted
+secrets. For later template changes, run `cpflow apply-template` and ensure the
+app identity can `reveal` the app secret policy.
 
-Set these in GitHub before enabling the generated `cpflow-*` workflows:
+## GitHub Configuration
 
-- `CPLN_TOKEN_STAGING`
-- `CPLN_TOKEN_PRODUCTION`
-- `CPLN_ORG_STAGING`
-- `CPLN_ORG_PRODUCTION`
-- `STAGING_APP_NAME=react-on-rails-migration-example-staging`
-- `PRODUCTION_APP_NAME=react-on-rails-migration-example-production`
-- `REVIEW_APP_PREFIX=react-on-rails-migration-example-review`
+The normal review-app path needs only the repository secret
+`CPLN_TOKEN_STAGING`; the review prefix and staging organization are inferred
+from `.controlplane/controlplane.yml`. Set `STAGING_APP_NAME` to
+`react-on-rails-migration-example-staging` for automatic staging deploys.
 
-Optional:
-
-- `STAGING_APP_BRANCH=main`
-- `PRIMARY_WORKLOAD=rails`
-
-Use a staging/review `CPLN_TOKEN_STAGING` that cannot access production Control
-Plane resources. In public repositories, review-app deploys skip fork PR heads
-because Docker builds use repository secrets. If a forked change needs a review
-app, first move the reviewed change to a trusted branch in this repository.
+Create a protected `production` GitHub Environment with required reviewers and
+self-review disabled. Store `CPLN_TOKEN_PRODUCTION` only as an Environment
+secret, and set `CPLN_ORG_PRODUCTION` and `PRODUCTION_APP_NAME` there as
+Environment variables. Do not create a repository or organization secret named
+`CPLN_TOKEN_PRODUCTION`.

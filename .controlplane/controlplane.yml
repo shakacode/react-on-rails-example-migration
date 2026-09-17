@@ -1,7 +1,7 @@
 # Keys beginning with "cpln_" correspond to your settings in Control Plane.
 #
-# This demo stores its SQLite database under `/app/db` and local Active Storage
-# files under `/app/storage`, so both directories need persistent volumes.
+# Generated baseline for a Rails app that uses SQLite in production. This setup
+# keeps `/app/db` and `/app/storage` on persistent volumes.
 
 allow_org_override_by_env: true
 allow_app_override_by_env: true
@@ -21,6 +21,7 @@ aliases:
       - rails
     additional_workloads: []
 
+    maintenance_workload: maintenance
     release_script: release_script.sh
 
     stale_app_image_deployed_days: 5
@@ -40,6 +41,13 @@ apps:
   react-on-rails-migration-example-review:
     <<: *common
     match_if_app_name_starts_with: true
+    # Optional: if a review app needs an existing shared org-level secret,
+    # declare its policy here and reference it in templates with
+    # {{SHARED_SECRET_<NAME>}}.
+    # shared_secret_grants:
+    #   - name: database
+    #     secret_name: react-on-rails-migration-example-review-database-secrets
+    #     policy_name: react-on-rails-migration-example-review-database-secrets-policy
 
   react-on-rails-migration-example-production:
     <<: *production
