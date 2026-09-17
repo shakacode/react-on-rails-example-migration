@@ -18,6 +18,17 @@ Capacity AI right-sizes its allocation.
 
 ## One-Time Bootstrap
 
+Create the shared review-app secret before enabling review deployments. Review
+apps execute pull-request code, so use a disposable value that grants no access
+to staging, production, or third-party services:
+
+```sh
+cpln secret create-dictionary \
+  --name react-on-rails-migration-example-review-secrets \
+  --org "$CPLN_ORG_STAGING" \
+  --entry "SECRET_KEY_BASE=$(bin/rails secret)"
+```
+
 Bootstrap the persistent staging and production apps before their first deploy:
 
 ```sh
@@ -32,10 +43,9 @@ cpflow setup-app \
   --skip-post-creation-hook
 ```
 
-Add `SECRET_KEY_BASE` to each generated app secret dictionary. Use disposable,
-review-safe values for review apps because pull-request code can read mounted
-secrets. For later template changes, run `cpflow apply-template` and ensure the
-app identity can `reveal` the app secret policy.
+Add a distinct `SECRET_KEY_BASE` to each generated staging and production app
+secret dictionary. For later template changes, run `cpflow apply-template` and
+ensure the app identity can `reveal` the app secret policy.
 
 ## GitHub Configuration
 
