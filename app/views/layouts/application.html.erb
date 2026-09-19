@@ -6,18 +6,17 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-    <%= javascript_pack_tag "application" %>
   </head>
 
   <body>
     <%=
       react_component(
         "Navbar",
-        {
-          menus: JSON.generate([{name: "Posts", href: root_path}]),
+        props: {
+          menus: JSON.generate([{ name: "Posts", href: root_path }]),
           homeUrl: root_path
         },
         prerender: true)

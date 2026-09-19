@@ -1,0 +1,53 @@
+# Keys beginning with "cpln_" correspond to your settings in Control Plane.
+#
+# Generated baseline for a Rails app that uses SQLite in production. This setup
+# keeps SQLite data under `/app/data` and Active Storage under `/app/storage`
+# on persistent volumes without hiding migrations under `/app/db`.
+
+allow_org_override_by_env: true
+allow_app_override_by_env: true
+
+aliases:
+  common: &common
+    cpln_org: my-org-staging
+    default_location: aws-us-east-2
+    setup_app_templates:
+      - app
+      - db
+      - storage
+      - rails
+
+    one_off_workload: rails
+    app_workloads:
+      - rails
+    additional_workloads: []
+
+    release_script: release_script.sh
+
+    stale_app_image_deployed_days: 5
+    image_retention_days: 7
+
+  production: &production
+    <<: *common
+    allow_org_override_by_env: false
+    allow_app_override_by_env: false
+    cpln_org: my-org-production
+    upstream: react-on-rails-migration-example-staging
+
+apps:
+  react-on-rails-migration-example-staging:
+    <<: *common
+
+  react-on-rails-migration-example-review:
+    <<: *common
+    match_if_app_name_starts_with: true
+    # Optional: if a review app needs an existing shared org-level secret,
+    # declare its policy here and reference it in templates with
+    # {{SHARED_SECRET_<NAME>}}.
+    # shared_secret_grants:
+    #   - name: database
+    #     secret_name: react-on-rails-migration-example-review-database-secrets
+    #     policy_name: react-on-rails-migration-example-review-database-secrets-policy
+
+  react-on-rails-migration-example-production:
+    <<: *production

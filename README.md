@@ -23,3 +23,9 @@ This repository is a migrated version of [ganchdev/react-rails-example](https://
 ## Notes
 - This app is intentionally minimal and focused on migration outcomes.
 - Generated React on Rails files are kept in-repo so users can inspect exact changes after migration.
+
+## Control Plane Flow
+
+This repo now includes a shared `cpflow` setup for review apps, automatic
+staging deploys from `main`, and production promotion. See
+`.controlplane/readme.md` for the required Control Plane and GitHub setup.
