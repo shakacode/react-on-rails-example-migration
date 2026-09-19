@@ -24,7 +24,7 @@ gem "puma", "~> 8.0"
 gem "jbuilder"
 
 # Embedded V8 javascript engine in ruby, it's pretty fast
-gem "mini_racer", "~> 0.21.4"
+gem "mini_racer", "~> 0.22.1"
 
 # The library which provides react helpers and more in rails
 gem "react_on_rails", "17.1.0"
@@ -91,4 +91,4 @@ group :test do
   gem "webdrivers"
 end
 
-gem "shakapacker", "= 10.2.0"
+gem "shakapacker", "10.3.2"
