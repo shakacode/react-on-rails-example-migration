@@ -95,6 +95,8 @@ Production promotion is part of the generated flow, but keep it protected:
 | `CPLN_TOKEN_PRODUCTION` | `production` GitHub Environment secret | Do not store this as a repository or organization secret. |
 | `CPLN_ORG_PRODUCTION` | Prefer `production` Environment variable | Production Control Plane org. |
 | `PRODUCTION_APP_NAME` | Prefer `production` Environment variable | Production app name from `controlplane.yml`. |
+| `CPLN_ORG_STAGING` | Repository or `production` Environment variable | Required staging source organization for promotion. |
+| `STAGING_APP_NAME` | Repository or `production` Environment variable | Required staging source app for promotion. |
 
 Configure the `production` GitHub Environment with required reviewers and
 prevent self-review. Production promotion intentionally runs as a normal
