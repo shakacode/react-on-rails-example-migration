@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby ">= 3.3.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.1.3"
+gem "rails", "~> 8.1.4"
 
 gem "base64"
 gem "bigdecimal"
@@ -24,7 +24,7 @@ gem "puma", "~> 8.0"
 gem "jbuilder"
 
 # Embedded V8 javascript engine in ruby, it's pretty fast
-gem "mini_racer", "~> 0.21.4"
+gem "mini_racer", "~> 0.22.1"
 
 # The library which provides react helpers and more in rails
 gem "react_on_rails", "17.2.0.rc.0"
@@ -91,4 +91,4 @@ group :test do
   gem "webdrivers"
 end
 
-gem "shakapacker", "= 10.2.0"
+gem "shakapacker", "10.3.2"
