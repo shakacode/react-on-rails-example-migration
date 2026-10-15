@@ -52,4 +52,3 @@ Store `CPLN_TOKEN_STAGING` as a repository secret. Set the repository variables
 apps and automatic staging deploys use that staging organization. The review
 app prefix is inferred from `.controlplane/controlplane.yml` unless
 `REVIEW_APP_PREFIX` overrides it.
-

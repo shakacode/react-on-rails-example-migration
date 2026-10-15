@@ -41,4 +41,3 @@ apps:
     #   - name: database
     #     secret_name: react-on-rails-migration-example-review-database-secrets
     #     policy_name: react-on-rails-migration-example-review-database-secrets-policy
-
