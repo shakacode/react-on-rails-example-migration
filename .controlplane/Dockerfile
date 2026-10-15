@@ -89,6 +89,8 @@ RUN SECRET_KEY_BASE=NOT_USED_NON_BLANK rails assets:precompile
 # add entrypoint
 COPY .controlplane/entrypoint.sh ./
 RUN chmod +x /app/entrypoint.sh
+ARG GIT_COMMIT=unknown
+ENV GIT_COMMIT=$GIT_COMMIT
 ENTRYPOINT ["/app/entrypoint.sh"]
 
 CMD ["rails", "s"]
