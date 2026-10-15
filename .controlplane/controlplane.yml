@@ -9,7 +9,7 @@ allow_app_override_by_env: true
 
 aliases:
   common: &common
-    cpln_org: my-org-staging
+    cpln_org: shakacode-open-source-examples-staging
     default_location: aws-us-east-2
     setup_app_templates:
       - app
@@ -27,13 +27,6 @@ aliases:
     stale_app_image_deployed_days: 5
     image_retention_days: 7
 
-  production: &production
-    <<: *common
-    allow_org_override_by_env: false
-    allow_app_override_by_env: false
-    cpln_org: my-org-production
-    upstream: react-on-rails-migration-example-staging
-
 apps:
   react-on-rails-migration-example-staging:
     <<: *common
@@ -49,5 +42,3 @@ apps:
     #     secret_name: react-on-rails-migration-example-review-database-secrets
     #     policy_name: react-on-rails-migration-example-review-database-secrets-policy
 
-  react-on-rails-migration-example-production:
-    <<: *production

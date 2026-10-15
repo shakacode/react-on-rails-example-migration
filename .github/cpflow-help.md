@@ -67,7 +67,7 @@ Optional overrides exist for forks, clones, and unusual apps:
 
 </details>
 
-## Staging And Production
+## Automatic staging
 
 Staging deploys use the same `CPLN_TOKEN_STAGING` secret plus `STAGING_APP_NAME`.
 Before the first staging deploy, bootstrap the persistent staging app once:
@@ -84,50 +84,7 @@ template updates on an existing persistent app, use `cpflow apply-template`
 with the same template list and make sure the app identity has `reveal`
 permission on the app secret policy.
 
-Review apps are temporary and are created by the `+review-app-deploy` workflow,
-but staging and production are persistent apps and should be bootstrapped
-explicitly.
-
-Production promotion is part of the generated flow, but keep it protected:
-
-| Name | Where | Notes |
-| --- | --- | --- |
-| `CPLN_TOKEN_PRODUCTION` | `production` GitHub Environment secret | Do not store this as a repository or organization secret. |
-| `CPLN_ORG_PRODUCTION` | Prefer `production` Environment variable | Production Control Plane org. |
-| `PRODUCTION_APP_NAME` | Prefer `production` Environment variable | Production app name from `controlplane.yml`. |
-| `CPLN_ORG_STAGING` | Repository or `production` Environment variable | Required staging source organization for promotion. |
-| `STAGING_APP_NAME` | Repository or `production` Environment variable | Required staging source app for promotion. |
-
-Configure the `production` GitHub Environment with required reviewers and
-prevent self-review. Production promotion intentionally runs as a normal
-caller-repo workflow job with `environment: production`, then checks out the
-pinned `control-plane-flow` release for shared actions. Do not move production
-promotion behind a cross-repo reusable workflow: GitHub does not expose this
-repo's environment secrets to that called workflow.
-
-Keep `CPLN_TOKEN_PRODUCTION` absent from repository and organization secrets. A
-normal environment-gated job cannot tell which secret scope supplied a nonempty
-value, so a broader secret with the same name can mask a missing environment
-secret.
-
-If the promotion workflow fails with
-`CPLN_TOKEN_PRODUCTION is not set. Add it as a secret on the 'production' GitHub Environment.`,
-the token is missing from the environment scope or the workflow job is no longer
-declaring `environment: production`. Create or verify the environment secret
-and confirm there is no same-named repository or organization secret:
-You need permission to manage repository environments and secrets to run these
-commands.
-
-```sh
-gh secret set CPLN_TOKEN_PRODUCTION --repo OWNER/REPO --env production
-# Paste the token value when prompted.
-gh secret list --repo OWNER/REPO --env production
-gh secret list --repo OWNER/REPO
-gh secret list --org OWNER | grep '^CPLN_TOKEN_PRODUCTION[[:space:]]' || true
-```
-
-Before the first promotion, bootstrap the production app the same way in the
-production org, using production-only secrets and values.
+Review apps are temporary; bootstrap persistent staging explicitly.
 
 <details>
 <summary>Version locking and advanced options</summary>
@@ -136,10 +93,7 @@ production org, using production-only secrets and values.
 
 Generated wrappers pin Control Plane Flow with a release tag, for example
 `v5.3.0`. Reusable review-app, staging, cleanup, and
-helper workflows pin the tag in their `uses:` ref. Production promotion pins
-the same tag in the `Checkout control-plane-flow actions` step so the
-caller-owned job can keep `environment: production` and receive production
-environment secrets directly.
+helper workflows pin the tag in their `uses:` ref. Production promotion is not configured.
 
 Leave `CPFLOW_VERSION` unset so the workflow builds cpflow from the same
 checked-out upstream source. If you set `CPFLOW_VERSION`, it must match the

@@ -27,5 +27,5 @@ This repository is a migrated version of [ganchdev/react-rails-example](https://
 ## Control Plane Flow
 
 This repo now includes a shared `cpflow` setup for review apps, automatic
-staging deploys from `main`, and production promotion. See
+staging deploys from `main`. See
 `.controlplane/readme.md` for the required Control Plane and GitHub setup.

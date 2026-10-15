@@ -9,6 +9,8 @@ class RenderingTest < ActionDispatch::IntegrationTest
     assert_select "h2", text: "Tail beef"
     assert_select 'script[data-component-name="Navbar"]'
     assert_select 'script[data-component-name="PostsIndex"]'
+    assert_select 'script[src*="generated/Navbar"]'
+    assert_select 'script[src*="generated/PostsIndex"]'
   end
 
   test "post details render on the server" do
@@ -17,6 +19,8 @@ class RenderingTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "h1", text: "Tail beef"
     assert_select 'script[data-component-name="PostsShow"]'
+    assert_select 'script[src*="generated/Navbar"]'
+    assert_select 'script[src*="generated/PostsShow"]'
   end
 
   test "hello world renders with the MiniRacer runtime" do
