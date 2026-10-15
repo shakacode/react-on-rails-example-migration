@@ -27,6 +27,7 @@ For the normal generated review-app path, GitHub Actions needs one secret:
 | Name | Where | Notes |
 | --- | --- | --- |
 | `CPLN_TOKEN_STAGING` | GitHub Actions secret | Service-account token scoped to the staging Control Plane org on controlplane.com. |
+| `DOCKER_BUILD_SSH_KEY` | Optional GitHub Actions secret | Read-only, revocable deploy key for Docker builds that fetch private dependencies. Do not use a personal SSH key. |
 
 For public repositories, use a staging/review token that cannot access
 production Control Plane resources. Generated review-app deploys skip fork PR
@@ -132,7 +133,6 @@ Most apps do not need these:
 | Name | Notes |
 | --- | --- |
 | `DOCKER_BUILD_EXTRA_ARGS` | Newline-delimited extra Docker build tokens. |
-| `DOCKER_BUILD_SSH_KEY` | Read-only, revocable deploy key for Docker builds that fetch private dependencies. Do not use a personal SSH key. |
 | `DOCKER_BUILD_SSH_KNOWN_HOSTS` | SSH known_hosts entries when SSH build hosts are not GitHub.com. |
 | `REVIEW_APP_DEPLOYING_ICON_URL` | Cosmetic custom image URL for the animated deploying icon. Set to `none` to use the text fallback icon. |
 | `STAGING_APP_BRANCH` | Custom staging branch. The branch must also appear in `cpflow-deploy-staging.yml`'s push filter. |

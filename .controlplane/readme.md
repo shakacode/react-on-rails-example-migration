@@ -15,8 +15,9 @@ templates therefore mount persistent volumes at `/app/data` and `/app/storage`,
 set `DATABASE_PATH=/app/data/production.sqlite3`, and leave the image's
 `/app/db` migrations visible to the release script. The release script runs
 `bin/rails db:prepare` before a new image is made live. The Rails workload
-remains `standard` with one warm replica while Capacity AI right-sizes its
-allocation.
+uses one `stateful` replica because SQLite and Active Storage use ext4 volumes.
+Each volume starts at the provider's 10 GiB minimum. CPU and memory are fixed;
+Capacity AI is not enabled for this stateful workload.
 
 ## One-Time Bootstrap
 

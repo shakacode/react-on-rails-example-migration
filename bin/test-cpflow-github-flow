@@ -75,7 +75,7 @@ Dir[".github/workflows/cpflow-*.yml"].sort.each do |path|
 end
 
 if refs.empty?
-  puts "no upstream cpflow reusable workflow refs found"
+  abort "no upstream cpflow reusable workflow refs found"
 elsif refs.length > 1
   refs.each do |ref, paths|
     puts "#{ref}: #{paths.uniq.sort.join(', ')}"

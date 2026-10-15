@@ -1,7 +1,7 @@
 kind: workload
 name: rails
 spec:
-  type: standard
+  type: stateful
   containers:
     - name: rails
       cpu: 300m
@@ -29,7 +29,6 @@ spec:
       minScale: 1
       maxScale: 1
       metric: disabled
-    capacityAI: true
     timeoutSeconds: 60
   firewallConfig:
     external:
