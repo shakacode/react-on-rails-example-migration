@@ -11,8 +11,11 @@ aliases:
   common: &common
     cpln_org: shakacode-open-source-examples-staging
     default_location: aws-us-east-2
+    # CI can update this app but cannot administer secret-access policies.
+    skip_secrets_setup: true
     setup_app_templates:
       - app
+      - identity
       - db
       - storage
       - rails

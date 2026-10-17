@@ -21,6 +21,10 @@ Capacity AI is not enabled for this stateful workload.
 
 ## One-Time Bootstrap
 
+The maintainer bootstraps each named app before CI deploys it. CI skips secret
+setup and has no policy-administration permission. The explicit identity template
+lets CI refresh an existing app without editing its secret-access policy.
+
 Create the shared review-app secret before enabling review deployments. Review
 apps execute pull-request code, so use a disposable value that grants no access
 to staging, production, or third-party services:
@@ -41,9 +45,22 @@ cpflow setup-app \
   --skip-post-creation-hook
 ```
 
-Add a distinct `SECRET_KEY_BASE` to the generated staging app
-secret dictionary. For later template changes, run `cpflow apply-template` and
-ensure the app identity can `reveal` the app secret policy.
+Create `react-on-rails-migration-example-staging-secrets` with a distinct
+`SECRET_KEY_BASE`. Bootstrap each review app with the same `setup-app` command
+and its concrete review-app name before requesting its first CI deployment.
+
+Outside CI, grant each app identity `reveal` on only its matching runtime
+dictionary through a maintainer-owned policy. Keep the default
+`<app-prefix>-secrets-policy` readable but without direct app-identity bindings;
+cpflow cleanup can then inspect it without needing policy-edit permission.
+CI needs `use` on the two dictionary references, not their plaintext values.
+Limit its app, workload, volume, identity and image permissions to the bootstrapped
+app names. Add a new review app to that allowlist before deploying it.
+
+Seed the first image with `cpflow build-image -a APP --org ORG`, then
+`cpflow deploy-image -a APP --org ORG` before enabling CI updates. The pinned
+workflow refreshes existing templates while preserving their configured image;
+an app with only the initial placeholder image cannot pass that refresh.
 
 ## GitHub Configuration
 
