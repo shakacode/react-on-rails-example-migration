@@ -1,0 +1,19 @@
+kind: gvc
+name: "{{APP_NAME}}"
+spec:
+  env:
+    - name: RAILS_ENV
+      value: production
+    - name: RAILS_LOG_TO_STDOUT
+      value: "true"
+    - name: RAILS_SERVE_STATIC_FILES
+      value: "true"
+    - name: DATABASE_PATH
+      value: /app/data/production.sqlite3
+    # Review apps execute pull request code, so only mount review-safe values
+    # through this generated secret dictionary.
+    - name: SECRET_KEY_BASE
+      value: "cpln://secret/{{APP_SECRETS}}.SECRET_KEY_BASE"
+  staticPlacement:
+    locationLinks:
+      - "{{APP_LOCATION_LINK}}"

@@ -11,7 +11,7 @@ means that capability is n/a here.
 | `validate` | Pre-push gate | JavaScript and Tailwind CSS builds, production Shakapacker compilation, then `bin/rails test` |
 | `test` | Run tests | `bin/rails test` |
 | `lint` | Lint / format | n/a |
-| `build` | Build / type-check | `bin/yarn build`, `bin/yarn build:css`, then `RAILS_ENV=production bin/shakapacker` |
+| `build` | Build / type-check | JavaScript and Tailwind builds, React on Rails pack generation, then production Shakapacker compilation |
 | `docs` | Validate documentation | n/a |
 | `ci-detect` | Detect CI impact | n/a |
 
