@@ -77,15 +77,12 @@ Before the first staging deploy, bootstrap the persistent staging app once:
 cpflow setup-app -a "$STAGING_APP_NAME" --org "$CPLN_ORG_STAGING" --skip-post-creation-hook
 ```
 
-`setup-app` reads `.controlplane/controlplane.yml`'s `setup_app_templates` and
-creates the app identity, app secret dictionary, app secret policy, policy
-binding, and template resources. Use `--skip-post-creation-hook` so first-time
-bootstrap does not try to run database setup before an image exists. For later
-template updates on an existing persistent app, use `cpflow apply-template`
-with the same template list and make sure the app identity has `reveal`
-permission on the app secret policy.
-
-Review apps are temporary; bootstrap persistent staging explicitly.
+This app sets `skip_secrets_setup: true`: `setup-app` applies its identity and
+resource templates but does not create secret dictionaries or access policies.
+Follow the [manual bootstrap procedure](../.controlplane/readme.md#one-time-bootstrap)
+to provision the separate signing keys, runtime grants and initial image outside
+CI. Bootstrap each named staging or review app and allowlist it before enabling
+CI updates. The CI credential does not administer access policies.
 
 <details>
 <summary>Version locking and advanced options</summary>
