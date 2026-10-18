@@ -23,3 +23,18 @@ This repository is a migrated version of [ganchdev/react-rails-example](https://
 ## Notes
 - This app is intentionally minimal and focused on migration outcomes.
 - Generated React on Rails files are kept in-repo so users can inspect exact changes after migration.
+
+## Temporary Verification
+
+Run `bin/verify-container` to build the production image and check server-rendered
+HTML on `/`, `/posts/0`, and `/hello_world`. Docker must be running. The command
+uses a random signing key, an ephemeral SQLite database, and a random localhost
+port. It removes its container and image tag on success, failure, or interruption.
+No cloud app, persistent volume, registry upload, or permanent endpoint is created.
+
+The image prepares SQLite automatically only for direct `rails server` / `rails s`
+commands, including `bin/rails`. Pass runtime overrides with Docker's `--env`
+flags. Custom wrapped commands must prepare their database explicitly.
+
+For interactive browser checks, use `bin/dev` and stop it afterward. This repository
+has no deployment workflows, automatic deployments, or permanent staging app.

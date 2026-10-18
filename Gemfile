@@ -13,6 +13,8 @@ gem "mutex_m"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
+# Sprockets 4.2 still passes JSON options removed in JSON 3.
+gem "json", "< 3"
 
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", "~> 2.9"
@@ -27,7 +29,7 @@ gem "jbuilder"
 gem "mini_racer", "~> 0.22.1"
 
 # The library which provides react helpers and more in rails
-gem "react_on_rails", "17.2.0.rc.0"
+gem "react_on_rails", "17.2.0"
 
 # Modern javscript compressor
 gem "terser"

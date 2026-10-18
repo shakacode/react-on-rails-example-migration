@@ -3,5 +3,6 @@
 set -euo pipefail
 cd "$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)"
 bin/yarn build
-bin/yarn build:css
+bin/rails tailwindcss:build
+bin/shakapacker-precompile-hook
 exec env RAILS_ENV=production bin/shakapacker "$@"

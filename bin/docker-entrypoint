@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+
+# Only direct Rails server commands prepare the temporary database automatically.
+# Pass runtime overrides with docker run --env; wrapped commands prepare explicitly.
+case "${1:-}:${2:-}" in
+  rails:s|rails:server|bin/rails:s|bin/rails:server|./bin/rails:s|./bin/rails:server)
+    echo " -- Preparing database"
+    ./bin/rails db:prepare
+    ;;
+esac
+
+exec "$@"
