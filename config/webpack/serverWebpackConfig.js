@@ -59,7 +59,8 @@ const configureServer = () => {
 if (typeof globalThis.TextEncoder === 'undefined') {
   globalThis.TextEncoder = class TextEncoder {
     encode(input = '') {
-      const encoded = unescape(encodeURIComponent(String(input)));
+      // TextEncoder replaces unpaired UTF-16 surrogates instead of throwing.
+      const encoded = unescape(encodeURIComponent(String(input).toWellFormed()));
       return Uint8Array.from(encoded, (character) => character.charCodeAt(0));
     }
   };

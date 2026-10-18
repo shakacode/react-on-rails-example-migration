@@ -31,4 +31,11 @@ class RenderingTest < ActionDispatch::IntegrationTest
     assert_select 'input#name[value="Stranger"]'
     assert_select 'script[data-component-name="HelloWorld"]'
   end
+
+  test "server text encoding replaces lone surrogates and retains Unicode" do
+    context = ReactOnRails::ServerRenderingPool.pool.create_js_context
+
+    assert_equal [239, 191, 189], context.eval(%q{Array.from(new TextEncoder().encode("\uD83D"))})
+    assert_equal [195, 169, 240, 159, 152, 128], context.eval(%q{Array.from(new TextEncoder().encode("é😀"))})
+  end
 end
