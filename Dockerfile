@@ -78,6 +78,7 @@ RUN if [ -f package.json ]; then \
     fi
 
 ENV RAILS_ENV=production
+ENV RAILS_SERVE_STATIC_FILES=true
 
 # Compiling assets requires any non-blank value, but the placeholder must not
 # remain in the final image environment.
@@ -87,7 +88,7 @@ RUN SECRET_KEY_BASE=NOT_USED_NON_BLANK bin/shakapacker-precompile-hook
 RUN SECRET_KEY_BASE=NOT_USED_NON_BLANK rails assets:precompile
 
 # add entrypoint
-COPY .controlplane/entrypoint.sh ./
+COPY bin/docker-entrypoint /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 ARG GIT_COMMIT=unknown
 ENV GIT_COMMIT=$GIT_COMMIT

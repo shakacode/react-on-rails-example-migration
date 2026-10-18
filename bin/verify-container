@@ -1,0 +1,64 @@
+#!/usr/bin/env ruby
+# Build and exercise a production image without provisioning a hosted app.
+require 'json'
+require 'net/http'
+require 'open3'
+require 'securerandom'
+
+Dir.chdir(File.expand_path('..', __dir__))
+Signal.trap('TERM') { raise Interrupt }
+name = "rormig-verification-#{Process.pid}-#{SecureRandom.hex(4)}"
+image = "#{name}:local"
+
+def run!(*command)
+  abort "Command failed: #{command.first(2).join(' ')}" unless system(*command)
+end
+
+def response_for(url)
+  uri = URI(url)
+  Net::HTTP.start(uri.host, uri.port, open_timeout: 2, read_timeout: 5) do |http|
+    http.get(uri.request_uri)
+  end
+end
+
+begin
+  head, status = Open3.capture2('git', 'rev-parse', 'HEAD')
+  abort 'Cannot determine the verification revision' unless status.success?
+  run!('docker', 'build', '--platform', 'linux/amd64', '--build-arg', "GIT_COMMIT=#{head.strip}", '--tag', image, '.')
+  env = { 'SECRET_KEY_BASE' => SecureRandom.hex(64) }
+  output, error, status = Open3.capture3(env, 'docker', 'run', '--detach', '--rm', '--name', name,
+    '--publish', '127.0.0.1::3000', '--env', 'SECRET_KEY_BASE',
+    '--env', 'DATABASE_PATH=/tmp/verification.sqlite3', image, 'bin/rails', 'server', '-b', '0.0.0.0')
+  abort "Container startup failed: #{error}" unless status.success?
+  port, status = Open3.capture2('docker', 'port', name, '3000/tcp')
+  abort 'Cannot determine the localhost port' unless status.success?
+  base = "http://#{port.strip}"
+  deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + 120
+  loop do
+    begin
+      response = response_for("#{base}/hello_world")
+      break if response.code == '200'
+    rescue IOError, SystemCallError, Net::OpenTimeout, Net::ReadTimeout
+      # Rails may still be preparing SQLite and starting Puma.
+    end
+    abort 'Container did not become healthy within 120 seconds' if Process.clock_gettime(Process::CLOCK_MONOTONIC) >= deadline
+    sleep 1
+  end
+  checked_assets = []
+  { '/' => 'Tail beef', '/posts/0' => 'Tail beef', '/hello_world' => 'Hello, Stranger!' }.each do |path, heading|
+    response = response_for("#{base}#{path}")
+    headings = response.body.scan(/<h[1-3]\b[^>]*>(.*?)<\/h[1-3]>/m).flatten.map { |html| html.gsub(/<[^>]*>/, '') }
+    abort "SSR check failed for #{path}" unless response.code == '200' && headings.any? { |text| text.include?(heading) } && response.body.include?('data-component-name=')
+    response.body.scan(/<(?:script|link)\b[^>]*(?:src|href)="([^"]+)"/i).flatten.uniq.each do |asset|
+      next unless asset.start_with?('/') && !asset.start_with?('//')
+      next if checked_assets.include?(asset)
+      abort "Asset check failed for #{asset}" unless response_for("#{base}#{asset}").code == '200'
+      checked_assets << asset
+    end
+    puts "PASS #{path}: HTTP 200, server HTML and reachable assets"
+  end
+  puts "Verified working-tree image (base revision #{head.strip}); localhost-only container #{name}"
+ensure
+  system('docker', 'rm', '--force', name, out: File::NULL, err: File::NULL)
+  system('docker', 'image', 'rm', image, out: File::NULL, err: File::NULL)
+end

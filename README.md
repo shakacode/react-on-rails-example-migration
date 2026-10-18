@@ -24,8 +24,13 @@ This repository is a migrated version of [ganchdev/react-rails-example](https://
 - This app is intentionally minimal and focused on migration outcomes.
 - Generated React on Rails files are kept in-repo so users can inspect exact changes after migration.
 
-## Control Plane Flow
+## Temporary Verification
 
-This repo now includes a shared `cpflow` setup for review apps, automatic
-staging deploys from `main`. See
-`.controlplane/readme.md` for the required Control Plane and GitHub setup.
+Run `bin/verify-container` to build the production image and check server-rendered
+HTML on `/`, `/posts/0`, and `/hello_world`. Docker must be running. The command
+uses a random signing key, an ephemeral SQLite database, and a random localhost
+port. It removes its container and image tag on success, failure, or interruption.
+No cloud app, persistent volume, registry upload, or permanent endpoint is created.
+
+For interactive browser checks, use `bin/dev` and stop it afterward. This repository
+has no deployment workflows, automatic deployments, or permanent staging app.
