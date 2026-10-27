@@ -2786,10 +2786,10 @@ react-jazzicon@^1.0.4:
   dependencies:
     mersenne-twister "^1.1.0"
 
-react-on-rails@17.2.0:
-  version "17.2.0"
-  resolved "https://registry.npmjs.org/react-on-rails/-/react-on-rails-17.2.0.tgz#6dfb1f9b9eb2c8912c5b5d2d06230b484d80cd3a"
-  integrity sha512-t6vOTT7fnyIB4VtW3chl3b1DcmQVR01sNhg1nevTol0hySweWCdigAOCfFyTDyGgSiXYD2ZGrZUSKGz2oVOm3Q==
+react-on-rails@17.2.1-rc.0:
+  version "17.2.1-rc.0"
+  resolved "https://registry.npmjs.org/react-on-rails/-/react-on-rails-17.2.1-rc.0.tgz#2f9cbc6a569037ea1d7ac39ab73edd1b85ccceff"
+  integrity sha512-kG9u0n2MKV02yJIti+/33//gkOPxbIL0nkceAkaZF1iEl63L2a8uUzO9Xc0d5QKfMLKVAF6bpBc2UzNfqMmMWw==
 
 react-refresh@0.19.0:
   version "0.19.0"
