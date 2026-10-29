@@ -17,7 +17,7 @@
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-jazzicon": "^1.0.4",
-    "react-on-rails": "17.2.1-rc.0",
+    "react-on-rails": "17.2.1-rc.1",
     "react_ujs": "^3.3.1",
     "sass-loader": "^17.0.1",
     "shakapacker": "10.3.2",
