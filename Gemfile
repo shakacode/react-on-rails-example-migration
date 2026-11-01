@@ -14,10 +14,10 @@ gem "mutex_m"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 # Sprockets 4.2 still passes JSON options removed in JSON 3.
-gem "json", "< 3"
+gem "json", "< 4"
 
 # Use sqlite3 as the database for Active Record
-gem "sqlite3", "~> 2.9"
+gem "sqlite3", "~> 2.10"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 8.0"
@@ -26,10 +26,10 @@ gem "puma", "~> 8.0"
 gem "jbuilder"
 
 # Embedded V8 javascript engine in ruby, it's pretty fast
-gem "mini_racer", "~> 0.22.1"
+gem "mini_racer", "~> 0.22.2"
 
 # The library which provides react helpers and more in rails
-gem "react_on_rails", "17.2.1.rc.0"
+gem "react_on_rails", "17.2.1.rc.1"
 
 # Modern javscript compressor
 gem "terser"
@@ -42,7 +42,7 @@ gem "js-routes"
 gem "jsbundling-rails", "~> 1.3"
 
 # Adds tailwind css
-gem "tailwindcss-rails", "~> 4.6"
+gem "tailwindcss-rails", "~> 4.7"
 
 # Run all the things easier in development
 gem "foreman", "~> 0.90.0"
